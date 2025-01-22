@@ -2,6 +2,7 @@ import { Navbar } from "@/components/Navbar";
 import { RoomCard } from "@/components/RoomCard";
 import { TestimonialCard } from "@/components/TestimonialCard";
 import { Button } from "@/components/ui/button";
+import { Search, MapPin, Calendar, DollarSign } from "lucide-react";
 
 const Index = () => {
   const featuredRooms = [
@@ -33,14 +34,14 @@ const Index = () => {
       name: "John Smith",
       role: "Product Manager Intern",
       company: "PayPal",
-      quote: "Found my perfect room in Austin within a week!",
+      quote: "Found my perfect room in Austin within a week! The platform made it incredibly easy to connect with other interns.",
       image: "/placeholder.svg",
     },
     {
       name: "Sarah Chen",
       role: "Software Engineer Intern",
       company: "Google",
-      quote: "The community aspect made my internship experience so much better.",
+      quote: "The community aspect made my internship experience so much better. I found great roommates through the platform.",
       image: "/placeholder.svg",
     },
   ];
@@ -58,9 +59,38 @@ const Index = () => {
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Connect with other interns, find housing near your workplace, and make the most of your internship experience.
           </p>
-          <Button size="lg" className="bg-primary hover:bg-primary/90">
-            Browse Available Rooms
-          </Button>
+          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6 mt-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="flex items-center gap-2 border rounded-md p-3">
+                <MapPin className="text-primary" />
+                <input
+                  type="text"
+                  placeholder="Location"
+                  className="w-full outline-none"
+                />
+              </div>
+              <div className="flex items-center gap-2 border rounded-md p-3">
+                <Calendar className="text-primary" />
+                <input
+                  type="text"
+                  placeholder="Duration"
+                  className="w-full outline-none"
+                />
+              </div>
+              <div className="flex items-center gap-2 border rounded-md p-3">
+                <DollarSign className="text-primary" />
+                <input
+                  type="text"
+                  placeholder="Budget"
+                  className="w-full outline-none"
+                />
+              </div>
+              <Button className="w-full">
+                <Search className="mr-2" />
+                Search
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
 
