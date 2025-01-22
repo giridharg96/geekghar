@@ -16,7 +16,9 @@ export const Navbar = () => {
               Channels
             </Link>
           </Button>
-          <Button variant="ghost">Find Rooms</Button>
+          <Button variant="ghost" asChild>
+            <Link to="/rooms">Find Rooms</Link>
+          </Button>
           <Button variant="ghost">List Property</Button>
           <Button>Sign In</Button>
         </div>
