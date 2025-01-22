@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { MessageSquare } from "lucide-react";
 
 export const Navbar = () => {
   return (
@@ -9,6 +10,12 @@ export const Navbar = () => {
           StayIntern
         </Link>
         <div className="flex items-center gap-4">
+          <Button variant="ghost" asChild>
+            <Link to="/channels">
+              <MessageSquare className="mr-2 h-4 w-4" />
+              Channels
+            </Link>
+          </Button>
           <Button variant="ghost">Find Rooms</Button>
           <Button variant="ghost">List Property</Button>
           <Button>Sign In</Button>
