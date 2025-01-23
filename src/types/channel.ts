@@ -17,3 +17,11 @@ export interface Message {
   timestamp: Date;
   channelId: string;
 }
+
+export interface ChannelGroup {
+  location: string;
+  companies: {
+    name: string;
+    channels: Channel[];
+  }[];
+}
