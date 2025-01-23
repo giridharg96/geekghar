@@ -28,12 +28,17 @@ const Auth = () => {
         const { error } = await supabase.auth.signUp({
           email,
           password,
+          options: {
+            emailRedirectTo: window.location.origin,
+          },
         });
         if (error) throw error;
-        toast({
-          title: "Success!",
-          description: "Please check your email to verify your account.",
+        // Sign in immediately after signup
+        await supabase.auth.signInWithPassword({
+          email,
+          password,
         });
+        navigate("/");
       }
     } catch (error: any) {
       toast({
@@ -68,11 +73,7 @@ const Auth = () => {
             required
           />
           <Button className="w-full" type="submit" disabled={loading}>
-            {loading
-              ? "Loading..."
-              : isLogin
-              ? "Sign In"
-              : "Create Account"}
+            {loading ? "Loading..." : isLogin ? "Sign In" : "Create Account"}
           </Button>
         </form>
         <p className="text-center mt-4">

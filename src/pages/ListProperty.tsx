@@ -7,9 +7,25 @@ import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 
+interface FormData {
+  title: string;
+  description: string;
+  price_per_month: string;
+  location: {
+    address: string;
+    city: string;
+    state: string;
+    country: string;
+  };
+  property_type: string;
+  furnishing: string;
+  preferred_gender: string;
+  stay_length: string;
+}
+
 const ListProperty = () => {
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     title: "",
     description: "",
     price_per_month: "",
@@ -33,9 +49,14 @@ const ListProperty = () => {
     try {
       const { error } = await supabase.from("properties").insert([
         {
-          ...formData,
+          title: formData.title,
+          description: formData.description,
           price_per_month: parseFloat(formData.price_per_month),
-          location: JSON.stringify(formData.location),
+          location: formData.location,
+          property_type: formData.property_type,
+          furnishing: formData.furnishing,
+          preferred_gender: formData.preferred_gender,
+          stay_length: formData.stay_length,
         },
       ]);
       if (error) throw error;
@@ -63,7 +84,10 @@ const ListProperty = () => {
       const [parent, child] = name.split(".");
       setFormData((prev) => ({
         ...prev,
-        [parent]: { ...prev[parent as keyof typeof formData], [child]: value },
+        [parent]: { 
+          ...prev[parent as keyof typeof prev],
+          [child]: value 
+        },
       }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
