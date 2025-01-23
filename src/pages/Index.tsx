@@ -3,31 +3,26 @@ import { RoomCard } from "@/components/RoomCard";
 import { TestimonialCard } from "@/components/TestimonialCard";
 import { Button } from "@/components/ui/button";
 import { Search, MapPin, Calendar, DollarSign } from "lucide-react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
-  const featuredRooms = [
-    {
-      title: "Modern Studio near PayPal Office",
-      location: "Austin, TX",
-      price: "$1,200/month",
-      duration: "3 months",
-      image: "/placeholder.svg",
-    },
-    {
-      title: "Cozy Room in Tech District",
-      location: "San Francisco, CA",
-      price: "$2,000/month",
-      duration: "6 months",
-      image: "/placeholder.svg",
-    },
-    {
-      title: "Shared Apartment near Google",
-      location: "Mountain View, CA",
-      price: "$1,500/month",
-      duration: "3 months",
-      image: "/placeholder.svg",
-    },
-  ];
+  const [featuredRooms, setFeaturedRooms] = useState([]);
+
+  useEffect(() => {
+    const fetchFeaturedRooms = async () => {
+      const { data, error } = await supabase
+        .from("properties")
+        .select("*")
+        .limit(3);
+      
+      if (!error && data) {
+        setFeaturedRooms(data);
+      }
+    };
+
+    fetchFeaturedRooms();
+  }, []);
 
   const testimonials = [
     {
@@ -99,8 +94,15 @@ const Index = () => {
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold mb-8">Featured Rooms</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredRooms.map((room, index) => (
-              <RoomCard key={index} {...room} />
+            {featuredRooms.map((room: any) => (
+              <RoomCard
+                key={room.id}
+                title={room.title}
+                location={JSON.parse(room.location).city}
+                price={`$${room.price_per_month}/month`}
+                duration={room.stay_length}
+                image="/placeholder.svg"
+              />
             ))}
           </div>
         </div>
